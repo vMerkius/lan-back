@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fIwjC5KIXoH6EblNdt6C/oM0bC40NY5auZL5sCtSv1JQJKYpVJ9ctAvYYFgkVN5iCn1mQ7mCEDrNztMWnwSXZA==",
+  "dgSpecHash": "FAthTOzYX65mxM9Pj1AlpAm08gDwWdjXx/AYILvZ4vZZpVAU1oR3fRB6NwcLyFjlW/QIi6VUmGzav9iz/sJqCA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Merki\\Desktop\\lan-back\\lan-back\\lan-back.csproj",
+  "projectFilePath": "C:\\Users\\Merki\\Desktop\\lan-back\\lan-back\\lan-back\\lan-back.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Merki\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Merki\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

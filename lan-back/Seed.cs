@@ -75,13 +75,13 @@ namespace lan_back
                                             {
                                                 new Word
                                                 {
-                                                    PolishWord="cze",
-                                                    EnglishWord="hi"
+                                                    OriginalWord="cze",
+                                                    TranslatedWord="hi"
                                                 },
                                                 new Word
                                                 {
-                                                    PolishWord="ta",
-                                                    EnglishWord="yes"
+                                                    OriginalWord="ta",
+                                                    TranslatedWord="yes"
                                                 }
                                             }
                                         }
@@ -115,13 +115,13 @@ namespace lan_back
                                             {
                                                 new Word
                                                 {
-                                                    PolishWord="cze2",
-                                                    EnglishWord="hi2"
+                                                    OriginalWord="cze2",
+                                                    TranslatedWord="hi2"
                                                 },
                                                 new Word
                                                 {
-                                                    PolishWord="ta2",
-                                                    EnglishWord="yes2"
+                                                    OriginalWord="ta2",
+                                                    TranslatedWord="yes2"
                                                 }
                                             }
                                         }

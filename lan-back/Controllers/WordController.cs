@@ -53,7 +53,7 @@ namespace lan_back.Controllers
             if (wordCreate == null)
                 return BadRequest(ModelState);
             var word = _wordRepository.GetWords()
-                .Where(a => a.PolishWord.Trim().ToUpper() == wordCreate.PolishWord.Trim().ToUpper())
+                .Where(a => a.OriginalWord.Trim().ToUpper() == wordCreate.OriginalWord.Trim().ToUpper())
                 .FirstOrDefault();
             if (word != null)
             {

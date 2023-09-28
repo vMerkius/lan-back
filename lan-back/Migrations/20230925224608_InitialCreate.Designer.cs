@@ -11,7 +11,7 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230920210021_InitialCreate")]
+    [Migration("20230925224608_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
