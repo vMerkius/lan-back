@@ -27,7 +27,7 @@ namespace lan_back.Controllers
             if (!_subjectRepository.SubjectExists(subjectsId))
                 return NotFound();
 
-            var subject = _subjectRepository.GetSubject(subjectsId);
+            var subject = _mapper.Map<SubjectDto>(_subjectRepository.GetSubject(subjectsId));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -38,7 +38,7 @@ namespace lan_back.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Subject>))]
         public IActionResult getSubjects()
         {
-            var subjects = _subjectRepository.GetSubjects();
+            var subjects = _mapper.Map<SubjectDto>(_subjectRepository.GetSubjects());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
