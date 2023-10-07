@@ -130,5 +130,45 @@ namespace lan_back.Controllers
 
         }
 
+        [HttpPost("multiple")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateWords([FromBody] List<WordDto> wordsCreate)
+        {
+            if (wordsCreate == null || !wordsCreate.Any())
+                return BadRequest(ModelState);
+
+            var existingWords = _wordRepository.GetWords().ToList();
+            List<Word> wordsToAdd = new List<Word>();
+
+            foreach (var wordCreate in wordsCreate)
+            {
+                bool wordExists = existingWords.Any(w => w.OriginalWord.Trim().ToUpper() == wordCreate.OriginalWord.Trim().ToUpper());
+
+                if (wordExists)
+                {
+                    ModelState.AddModelError("", $"Word '{wordCreate.OriginalWord}' already exists");
+                    continue;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    var mappedWord = _mapper.Map<Word>(wordCreate);
+                    wordsToAdd.Add(mappedWord);
+                }
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_wordRepository.CreateWords(wordsToAdd))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving the words");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully created");
+        }
+
     }
 }

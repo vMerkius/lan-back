@@ -48,5 +48,14 @@ namespace lan_back.Repository
             _context.Remove(word);
             return Save();
         }
+
+        public bool CreateWords(List<Word> words)
+        {
+            foreach (var item in words)
+            {
+                _context.Add(item);
+            }
+            return Save();
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace lan_back.Interfaces
         ICollection<Word> GetWords();
         bool WordExists(int id);
         bool CreateWord(Word word);
+        bool CreateWords(List<Word> words);
         bool UpdateWord(Word word);
         bool DeleteWord(Word word);
         bool Save();
