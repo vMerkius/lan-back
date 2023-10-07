@@ -48,7 +48,7 @@ namespace lan_back.Repository
 
         public bool UpdateQuiz(Quiz quiz)
         {
-            _context.Add(quiz);
+            _context.Update(quiz);
             return Save();
         }
 
