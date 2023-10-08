@@ -38,7 +38,7 @@ namespace lan_back.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Subject>))]
         public IActionResult getSubjects()
         {
-            var subjects = _mapper.Map<SubjectDto>(_subjectRepository.GetSubjects());
+            var subjects = _mapper.Map<List<SubjectDto>>(_subjectRepository.GetSubjects());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -5,7 +5,8 @@
         public int Id { get; set; }
         public string OriginalWord { get; set; }
         public string TranslatedWord { get; set; }
-        public int FlashcardId { get; set; } 
-        public Flashcard Flashcard { get; set; } 
+        public string ImageUrl { get; set; } 
+        public int FlashcardId { get; set; }
+        public Flashcard Flashcard { get; set; }
     }
 }

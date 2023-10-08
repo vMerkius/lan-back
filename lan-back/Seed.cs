@@ -61,7 +61,8 @@ namespace lan_back
                                                 new Subject
                                                 {
                                                     Name = "name_subject",
-                                                    Desription = "desc2"
+                                                    Description = "desc2",
+                                                    imageUrl="jk"
                                                 }
                                             }
                                         }
@@ -76,12 +77,14 @@ namespace lan_back
                                                 new Word
                                                 {
                                                     OriginalWord="cze",
-                                                    TranslatedWord="hi"
+                                                    TranslatedWord="hi",
+                                                    ImageUrl = "dd"
                                                 },
                                                 new Word
                                                 {
                                                     OriginalWord="ta",
-                                                    TranslatedWord="yes"
+                                                    TranslatedWord="yes",
+                                                    ImageUrl = "g"
                                                 }
                                             }
                                         }
@@ -101,7 +104,8 @@ namespace lan_back
                                                 new Subject
                                                 {
                                                     Name = "name_subject2",
-                                                    Desription = "desc22"
+                                                    Description = "desc22",
+                                                    imageUrl="jhk"
                                                 }
                                             }
                                         }
@@ -116,12 +120,14 @@ namespace lan_back
                                                 new Word
                                                 {
                                                     OriginalWord="cze2",
-                                                    TranslatedWord="hi2"
+                                                    TranslatedWord="hi2",
+                                                    ImageUrl="jh"
                                                 },
                                                 new Word
                                                 {
                                                     OriginalWord="ta2",
-                                                    TranslatedWord="yes2"
+                                                    TranslatedWord="hiihi2",
+                                                    ImageUrl="lkj"
                                                 }
                                             }
                                         }
@@ -139,7 +145,7 @@ namespace lan_back
                                     {
                                         new Question {
                                             Description = "desc",
-                                            CorrectAnswer = "de",
+                                            CorrectAnswer = 1,
                                             Answers = new List<Answer>()
                                             {
                                                 new Answer
@@ -158,7 +164,7 @@ namespace lan_back
                                     {
                                         new Question {
                                             Description = "desc2",
-                                            CorrectAnswer = "fe",
+                                            CorrectAnswer = 1,
 
                                             Answers = new List<Answer>()
                                             {
