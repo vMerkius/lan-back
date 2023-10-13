@@ -51,6 +51,24 @@ namespace lan_back.Controllers
 
             return Ok(user);
         }
+
+        [HttpGet("age/{userId}")]
+        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(400)]
+        public IActionResult GetUserAge(int userId)
+        {
+
+            var user = _mapper.Map<UserDto>(_userRepository.GetUser(userId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var today = DateTime.Today;
+            var age = today.Year - user.DateOfBirth.Year;
+            if (user.DateOfBirth.Date > today.AddYears(-age)) age--;
+
+            return Ok(age);
+        }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
         public IActionResult getUsers()

@@ -27,12 +27,16 @@ namespace lan_back.Repository
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.Where(u=>u.Email==email).FirstOrDefault();
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+        public User GetUserAge(int id)
+        {
+            return _context.Users.Where(u => u.Id== id).FirstOrDefault();
         }
 
         public ICollection<User> GetUsers()
         {
-            return _context.Users.OrderBy(u=>u.Id).ToList();
+            return _context.Users.OrderBy(u => u.Id).ToList();
 
         }
 
@@ -70,5 +74,8 @@ namespace lan_back.Repository
             _context.Remove(user);
             return Save();
         }
+
+       
     }
 }
+

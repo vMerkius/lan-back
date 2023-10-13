@@ -39,7 +39,8 @@ namespace lan_back
                             Name = "essa",
                             Email = "a@wp.pk",
                             Password = "123",
-                            Age = 10,
+                            DateOfBirth = new DateTime(1999, 3, 16),
+                            Gender="M",
                             Country = "Poland"
                         },
                         Course = new Course()
