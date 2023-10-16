@@ -20,6 +20,8 @@ namespace lan_back.Data
         public DbSet<Word> Words { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<AdminReply> AdminReplies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

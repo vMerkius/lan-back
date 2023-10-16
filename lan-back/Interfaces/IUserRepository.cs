@@ -9,6 +9,7 @@ namespace lan_back.Interfaces
         User GetUserByEmail(string email);
         User GetUserAge(int id);
         ICollection<User> GetUsers();
+        ICollection<Course> GetUserCourses(int id);
         bool UserExists(int id);
         bool CreateUser(int courseId, User user);
         bool UpdateUser(int courdeId,User user);

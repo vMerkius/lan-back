@@ -41,7 +41,9 @@ namespace lan_back
                             Password = "123",
                             DateOfBirth = new DateTime(1999, 3, 16),
                             Gender="M",
-                            Country = "Poland"
+                            Country = "Poland",
+                            ImageUrl = ""
+
                         },
                         Course = new Course()
                         {
@@ -63,7 +65,7 @@ namespace lan_back
                                                 {
                                                     Name = "name_subject",
                                                     Description = "desc2",
-                                                    imageUrl="jk"
+                                                    ImageUrl="jk"
                                                 }
                                             }
                                         }
@@ -106,7 +108,7 @@ namespace lan_back
                                                 {
                                                     Name = "name_subject2",
                                                     Description = "desc22",
-                                                    imageUrl="jhk"
+                                                    ImageUrl="jhk"
                                                 }
                                             }
                                         }

@@ -161,5 +161,17 @@ namespace lan_back.Controllers
             return NoContent();
 
         }
+
+        [HttpGet("courses/attended/{userId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        public IActionResult getUserCourses(int userId)
+        {
+            var courses = _mapper.Map<List<CourseDto>>(_userRepository.GetUserCourses(userId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(courses);
+        }
     }
 }

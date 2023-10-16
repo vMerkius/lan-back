@@ -12,7 +12,7 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231012143716_InitialCreate")]
+    [Migration("20231013214549_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -205,14 +205,14 @@ namespace lan_back.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -243,6 +243,10 @@ namespace lan_back.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

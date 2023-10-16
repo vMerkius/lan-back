@@ -75,7 +75,13 @@ namespace lan_back.Repository
             return Save();
         }
 
-       
+        public ICollection<Course> GetUserCourses(int id)
+        {
+            return _context.UserCourses
+                    .Where(uc => uc.UserId == id)
+                    .Select(uc => uc.Course)
+                    .ToList();
+        }
     }
 }
 
