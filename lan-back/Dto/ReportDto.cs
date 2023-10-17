@@ -9,7 +9,6 @@ namespace lan_back.Dto
         public string Topic { get; set; }
         public string Message { get; set; }
         public bool IsReviewed { get; set; } = false;
-        public int AdminReplyId { get; set; }
 
     }
 }

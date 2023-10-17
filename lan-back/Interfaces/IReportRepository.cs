@@ -11,6 +11,7 @@ namespace lan_back.Interfaces
         bool CreateReport(Report report);
         bool UpdateReport(Report report);
         bool DeleteReport(Report report);
+        Reply GetReplyToReport(int id);
         bool Save();
     }
 

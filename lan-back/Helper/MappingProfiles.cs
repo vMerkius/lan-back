@@ -28,6 +28,10 @@ namespace lan_back.Helper
             CreateMap<ModuleDto, Module>();
             CreateMap<Course, CourseDto>();
             CreateMap<CourseDto, Course>();
+            CreateMap<Report, ReportDto>();
+            CreateMap<ReportDto, Report>();
+            CreateMap<Reply, ReplyDto>();
+            CreateMap<ReplyDto, Reply>();
 
 
         }

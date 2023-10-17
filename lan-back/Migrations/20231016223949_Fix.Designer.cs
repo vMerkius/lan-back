@@ -12,8 +12,8 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231013214549_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231016223949_Fix")]
+    partial class Fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -191,6 +191,57 @@ namespace lan_back.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("lan_back.Models.Reply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId")
+                        .IsUnique();
+
+                    b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("lan_back.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsReviewed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("lan_back.Models.Subject", b =>
@@ -374,6 +425,17 @@ namespace lan_back.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("lan_back.Models.Reply", b =>
+                {
+                    b.HasOne("lan_back.Models.Report", "Report")
+                        .WithOne("Reply")
+                        .HasForeignKey("lan_back.Models.Reply", "ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
             modelBuilder.Entity("lan_back.Models.Subject", b =>
                 {
                     b.HasOne("lan_back.Models.Lesson", "Lesson")
@@ -449,6 +511,12 @@ namespace lan_back.Migrations
             modelBuilder.Entity("lan_back.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("lan_back.Models.Report", b =>
+                {
+                    b.Navigation("Reply")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("lan_back.Models.User", b =>

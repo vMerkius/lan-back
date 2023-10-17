@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lan_back.Data;
 
@@ -11,9 +12,11 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231016223255_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,13 +205,7 @@ namespace lan_back.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ReportId")
-                        .IsUnique();
 
                     b.ToTable("Replies");
                 });
@@ -232,11 +229,16 @@ namespace lan_back.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ReplyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReplyId");
 
                     b.ToTable("Reports");
                 });
@@ -422,15 +424,15 @@ namespace lan_back.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("lan_back.Models.Reply", b =>
+            modelBuilder.Entity("lan_back.Models.Report", b =>
                 {
-                    b.HasOne("lan_back.Models.Report", "Report")
-                        .WithOne("Reply")
-                        .HasForeignKey("lan_back.Models.Reply", "ReportId")
+                    b.HasOne("lan_back.Models.Reply", "Reply")
+                        .WithMany()
+                        .HasForeignKey("ReplyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Report");
+                    b.Navigation("Reply");
                 });
 
             modelBuilder.Entity("lan_back.Models.Subject", b =>
@@ -508,12 +510,6 @@ namespace lan_back.Migrations
             modelBuilder.Entity("lan_back.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("lan_back.Models.Report", b =>
-                {
-                    b.Navigation("Reply")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("lan_back.Models.User", b =>

@@ -21,7 +21,7 @@ namespace lan_back.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<AdminReply> AdminReplies { get; set; }
+        public DbSet<Reply> Replies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

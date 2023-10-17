@@ -47,6 +47,9 @@ namespace lan_back.Repository
             return Save();
         }
 
-       
+        public Reply GetReplyToReport(int id)
+        {
+            return _context.Replies.Where(r=>r.ReportId == id).FirstOrDefault();
+        }
     }
 }

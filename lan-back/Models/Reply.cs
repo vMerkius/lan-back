@@ -1,11 +1,10 @@
-﻿using lan_back.Models;
-
-namespace lan_back.Dto
+﻿namespace lan_back.Models
 {
-    public class AdminReplyDto
-    {
+    public class Reply
+    { 
         public int Id { get; set; }
         public string Message { get; set; }
         public int ReportId { get; set; }
+        public Report Report { get; set; }
     }
 }

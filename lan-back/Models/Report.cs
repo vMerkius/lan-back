@@ -7,7 +7,6 @@
         public string Topic { get; set; }
         public string Message { get; set; }
         public bool IsReviewed { get; set; } = false;
-        public int AdminReplyId { get; set; }
-        public AdminReply AdminReply { get; set; }
+        public virtual Reply Reply { get; set; }
     }
 }
