@@ -26,16 +26,19 @@ namespace lan_back.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Replies",
+                name: "Reports",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsReviewed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Replies", x => x.Id);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,24 +103,21 @@ namespace lan_back.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reports",
+                name: "Replies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsReviewed = table.Column<bool>(type: "bit", nullable: false),
-                    ReplyId = table.Column<int>(type: "int", nullable: false)
+                    ReportId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.PrimaryKey("PK_Replies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_Replies_ReplyId",
-                        column: x => x.ReplyId,
-                        principalTable: "Replies",
+                        name: "FK_Replies_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -303,9 +303,10 @@ namespace lan_back.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_ReplyId",
-                table: "Reports",
-                column: "ReplyId");
+                name: "IX_Replies_ReportId",
+                table: "Replies",
+                column: "ReportId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_LessonId",
@@ -330,7 +331,7 @@ namespace lan_back.Migrations
                 name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "Reports");
+                name: "Replies");
 
             migrationBuilder.DropTable(
                 name: "Subjects");
@@ -345,7 +346,7 @@ namespace lan_back.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Replies");
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Lessons");

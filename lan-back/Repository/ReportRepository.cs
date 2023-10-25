@@ -51,5 +51,10 @@ namespace lan_back.Repository
         {
             return _context.Replies.Where(r=>r.ReportId == id).FirstOrDefault();
         }
+
+        public int GetReportsToReply()
+        {
+            return _context.Reports.Where(r => r.IsReviewed == false).Count();
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace lan_back.Interfaces
         bool UpdateReport(Report report);
         bool DeleteReport(Report report);
         Reply GetReplyToReport(int id);
+        int GetReportsToReply();
         bool Save();
     }
 

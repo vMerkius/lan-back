@@ -12,7 +12,7 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231016223255_InitialCreate")]
+    [Migration("20231020183226_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -205,7 +205,13 @@ namespace lan_back.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ReportId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportId")
+                        .IsUnique();
 
                     b.ToTable("Replies");
                 });
@@ -229,16 +235,11 @@ namespace lan_back.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReplyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReplyId");
 
                     b.ToTable("Reports");
                 });
@@ -424,15 +425,15 @@ namespace lan_back.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("lan_back.Models.Report", b =>
+            modelBuilder.Entity("lan_back.Models.Reply", b =>
                 {
-                    b.HasOne("lan_back.Models.Reply", "Reply")
-                        .WithMany()
-                        .HasForeignKey("ReplyId")
+                    b.HasOne("lan_back.Models.Report", "Report")
+                        .WithOne("Reply")
+                        .HasForeignKey("lan_back.Models.Reply", "ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Reply");
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("lan_back.Models.Subject", b =>
@@ -510,6 +511,12 @@ namespace lan_back.Migrations
             modelBuilder.Entity("lan_back.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("lan_back.Models.Report", b =>
+                {
+                    b.Navigation("Reply")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("lan_back.Models.User", b =>

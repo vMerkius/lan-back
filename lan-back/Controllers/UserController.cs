@@ -52,6 +52,20 @@ namespace lan_back.Controllers
             return Ok(user);
         }
 
+        [HttpGet("byemail/{userEmail}")]
+        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(400)]
+        public IActionResult GetUserByEmail(string userEmail)
+        {
+
+            var user = _mapper.Map<UserDto>(_userRepository.GetUserByEmail(userEmail));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(user);
+        }
+
         [HttpGet("age/{userId}")]
         [ProducesResponseType(200, Type = typeof(User))]
         [ProducesResponseType(400)]

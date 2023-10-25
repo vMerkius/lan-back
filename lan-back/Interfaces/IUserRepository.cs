@@ -14,6 +14,9 @@ namespace lan_back.Interfaces
         bool CreateUser(int courseId, User user);
         bool UpdateUser(int courdeId,User user);
         bool DeleteUser(User user);
+        int GetMen();
+        int GetWomen();
+        double GetAverageAge();
         bool Save();
 
     }

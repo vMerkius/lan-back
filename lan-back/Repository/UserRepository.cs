@@ -82,6 +82,22 @@ namespace lan_back.Repository
                     .Select(uc => uc.Course)
                     .ToList();
         }
+
+        public int GetMen()
+        {
+            return _context.Users.Where(u => u.Gender == "M").Count();
+        }
+
+        public int GetWomen()
+        {
+            return _context.Users.Where(u => u.Gender == "W").Count();
+        }
+
+        public double GetAverageAge()
+        {
+            var today = DateTime.Today;
+            return _context.Users.Average(u => (today - u.DateOfBirth).TotalDays) / 365.25;
+        }
     }
 }
 
