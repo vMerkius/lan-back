@@ -17,6 +17,9 @@ namespace lan_back.Interfaces
         int GetMen();
         int GetWomen();
         double GetAverageAge();
+        object GetCountriesInfo();
+        string DetermineAgeGroup(DateTime dateOfBirth);
+        object GetUsersByAgeGroup();
         bool Save();
 
     }

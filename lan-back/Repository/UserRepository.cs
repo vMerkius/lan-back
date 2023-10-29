@@ -96,8 +96,77 @@ namespace lan_back.Repository
         public double GetAverageAge()
         {
             var today = DateTime.Today;
-            return _context.Users.Average(u => (today - u.DateOfBirth).TotalDays) / 365.25;
+
+            var averageAge = _context.Users
+                                     .Select(u => today.Year - u.DateOfBirth.Year -
+                                                  ((today.Month < u.DateOfBirth.Month ||
+                                                   (today.Month == u.DateOfBirth.Month && today.Day < u.DateOfBirth.Day)) ? 1 : 0))
+                                     .Average();
+
+            return averageAge;
         }
+        public object GetCountriesInfo()
+        {
+            return _context.Users
+                            .GroupBy(u => u.Country)
+                            .Select(group => new
+                            {
+                                Country = group.Key,
+                                Count = group.Count()
+                            })
+                            .ToList();
+        }
+        public string DetermineAgeGroup(DateTime dateOfBirth)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dateOfBirth.Year - ((today.Month < dateOfBirth.Month || (today.Month == dateOfBirth.Month && today.Day < dateOfBirth.Day)) ? 1 : 0);
+
+            if (age >= 13 && age <= 18) return "13-18";
+            if (age >= 19 && age <= 26) return "19-26";
+            if (age >= 27 && age <= 40) return "27-40";
+            if (age >= 41 && age <= 60) return "41-60";
+            if (age >= 61 && age <= 100) return "61-100";
+            return "Out of range";
+        }
+        public object GetUsersByAgeGroup()
+        {
+            var today = DateTime.Today;
+
+            var ageGroups = new Dictionary<string, int>
+    {
+        { "13-18", 0 },
+        { "19-26", 0 },
+        { "27-40", 0 },
+        { "41-60", 0 },
+        { "61-100", 0 },
+        { "Other", 0 }
+    };
+
+            var usersByAge = _context.Users
+                .Select(u => new
+                {
+                    DateOfBirth = u.DateOfBirth,
+                    Age = today.Year - u.DateOfBirth.Year - ((today.Month < u.DateOfBirth.Month || (today.Month == u.DateOfBirth.Month && today.Day < u.DateOfBirth.Day)) ? 1 : 0)
+                })
+                .GroupBy(u => u.Age < 19 ? "13-18" :
+                              u.Age < 27 ? "19-26" :
+                              u.Age < 41 ? "27-40" :
+                              u.Age < 61 ? "41-60" :
+                              u.Age <= 100 ? "61-100" : "Other")
+                .ToList();
+
+            foreach (var group in usersByAge)
+            {
+                ageGroups[group.Key] = group.Count();
+            }
+
+            return ageGroups.Select(group => new
+            {
+                AgeGroup = group.Key,
+                Count = group.Value
+            }).ToList();
+        }
+
     }
 }
 

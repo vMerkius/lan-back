@@ -31,12 +31,16 @@ namespace lan_back.Controllers
             int men = _userRepository.GetMen();
             int reportstoreply = _reportRepository.GetReportsToReply();
             double averageage = _userRepository.GetAverageAge();
+            object countriesinfo = _userRepository.GetCountriesInfo();
+            object usersage = _userRepository.GetUsersByAgeGroup();
             return Ok(new
             {
                 Reports = reportstoreply,
                 Men = men,
                 Women = women,
-                Averageage = averageage
+                Averageage = averageage,
+                Countriesinfo = countriesinfo,
+                Usersage = usersage
             });
 
         }

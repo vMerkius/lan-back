@@ -101,12 +101,20 @@ namespace lan_back.Controllers
         {
             if (userCreate == null)
                 return BadRequest(ModelState);
-            var user = _userRepository.GetUsers()
+            var userName = _userRepository.GetUsers()
                 .Where(a => a.Name.Trim().ToUpper() == userCreate.Name.Trim().ToUpper())
                 .FirstOrDefault();
-            if (user != null)
+            var userEmail = _userRepository.GetUsers()
+                .Where(a => a.Email.Trim().ToUpper() == userCreate.Email.Trim().ToUpper())
+                .FirstOrDefault();
+            if (userName != null)
             {
-                ModelState.AddModelError("", "User already exists");
+                ModelState.AddModelError("", "User with this name already exists");
+                return StatusCode(422, ModelState);
+            }
+            if (userName != null)
+            {
+                ModelState.AddModelError("", "User with this email already exists");
                 return StatusCode(422, ModelState);
             }
 
