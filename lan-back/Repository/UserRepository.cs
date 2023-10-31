@@ -44,16 +44,25 @@ namespace lan_back.Repository
         {
             return _context.Users.Any(u => u.Id == id);
         }
-        public bool CreateUser(int courseId, User user)
+        public bool CreateUser(User user)
         {
-            var userCourseEntity = _context.Courses.Where(c => c.Id == courseId).FirstOrDefault();
+            _context.Add(user);
+            return Save();
+        }
+        public bool JoinCourse(int userId, int courseId)
+        {
+            var userEntity = _context.Users.Where(u=> u.Id == userId).FirstOrDefault();
+            var courseEntity = _context.Courses.Where(c => c.Id == courseId).FirstOrDefault();
+            if (userEntity == null || courseEntity == null)
+            {
+                return false;
+            }
             var userCourse = new UserCourse
             {
-                User = user,
-                Course = userCourseEntity,
+                User = userEntity,
+                Course = courseEntity,
             };
             _context.Add(userCourse);
-            _context.Add(user);
             return Save();
         }
 
@@ -75,12 +84,36 @@ namespace lan_back.Repository
             return Save();
         }
 
+        public bool Login(string email, string password)
+        {
+            var user = _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+            if (user == null)
+            {
+                return false;
+            }
+            return true;
+ 
+        }
+
         public ICollection<Course> GetUserCourses(int id)
         {
             return _context.UserCourses
                     .Where(uc => uc.UserId == id)
                     .Select(uc => uc.Course)
                     .ToList();
+        }
+        public ICollection<Course> GetUserNonParticipatingCourses(int userId)
+        {
+            var userCourses = _context.UserCourses
+                                      .Where(uc => uc.UserId == userId)
+                                      .Select(uc => uc.CourseId)
+                                      .ToList();
+
+            var nonParticipatingCourses = _context.Courses
+                                                  .Where(c => !userCourses.Contains(c.Id))
+                                                  .ToList();
+
+            return nonParticipatingCourses;
         }
 
         public int GetMen()

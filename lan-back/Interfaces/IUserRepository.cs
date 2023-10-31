@@ -10,10 +10,13 @@ namespace lan_back.Interfaces
         User GetUserAge(int id);
         ICollection<User> GetUsers();
         ICollection<Course> GetUserCourses(int id);
+        ICollection<Course> GetUserNonParticipatingCourses(int id);
         bool UserExists(int id);
-        bool CreateUser(int courseId, User user);
+        bool CreateUser(User user);
+        bool JoinCourse(int userId, int courseId);
         bool UpdateUser(int courdeId,User user);
         bool DeleteUser(User user);
+        bool Login(string email, string password);
         int GetMen();
         int GetWomen();
         double GetAverageAge();

@@ -97,7 +97,7 @@ namespace lan_back.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateUser([FromQuery] int courseId,[FromBody] UserDto userCreate)
+        public IActionResult CreateUser([FromBody] UserDto userCreate)
         {
             if (userCreate == null)
                 return BadRequest(ModelState);
@@ -112,7 +112,7 @@ namespace lan_back.Controllers
                 ModelState.AddModelError("", "User with this name already exists");
                 return StatusCode(422, ModelState);
             }
-            if (userName != null)
+            if (userEmail != null)
             {
                 ModelState.AddModelError("", "User with this email already exists");
                 return StatusCode(422, ModelState);
@@ -123,7 +123,21 @@ namespace lan_back.Controllers
 
             var userMap = _mapper.Map<User>(userCreate);
 
-            if (!_userRepository.CreateUser(courseId, userMap))
+            if (!_userRepository.CreateUser(userMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Successfully created");
+        }
+        [HttpPost("join/course")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult JoinCourse( [FromQuery] int userId ,[FromQuery] int courseId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (!_userRepository.JoinCourse(userId, courseId))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -183,12 +197,41 @@ namespace lan_back.Controllers
             return NoContent();
 
         }
+        [HttpPost("login")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult Login([FromQuery] string email, [FromQuery] string password)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            bool isUserValid = _userRepository.Login(email, password);
+            if (!isUserValid)
+            {
+                return BadRequest("Invalid email or password.");
+            }
+            //TODO token
+            return Ok("Successfully logged in");
+        }
+
 
         [HttpGet("courses/attended/{userId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Course>))]
         public IActionResult getUserCourses(int userId)
         {
             var courses = _mapper.Map<List<CourseDto>>(_userRepository.GetUserCourses(userId));
+
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(courses);
+        }
+        [HttpGet("courses/nonparticipating/{userId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Course>))]
+        public IActionResult GetUserNonParticipatingCourses(int userId)
+        {
+            var courses = _mapper.Map<List<CourseDto>>(_userRepository.GetUserNonParticipatingCourses(userId));
+
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

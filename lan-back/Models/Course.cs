@@ -9,8 +9,5 @@
         public ICollection<Quiz> Quizzes { get; set; }
         public ICollection<UserCourse> UserCourses { get; set; }
 
-
-
-
     }
 }
