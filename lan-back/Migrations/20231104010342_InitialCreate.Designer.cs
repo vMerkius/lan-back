@@ -12,8 +12,8 @@ using lan_back.Data;
 namespace lan_back.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231016223949_Fix")]
-    partial class Fix
+    [Migration("20231104010342_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -320,6 +320,9 @@ namespace lan_back.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Progress")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "CourseId");

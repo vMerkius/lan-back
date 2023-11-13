@@ -34,6 +34,7 @@ namespace lan_back
                 {
                     new UserCourse()
                     {
+                        Progress= 0,
                         User = new User()
                         {
                             Name = "essa",
@@ -183,6 +184,7 @@ namespace lan_back
                             }
 
                         }
+                        
                     },
                 };
 
