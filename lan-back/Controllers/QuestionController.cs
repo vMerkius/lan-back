@@ -144,5 +144,28 @@ namespace lan_back.Controllers
             return NoContent();
 
         }
+        [HttpPut("{questionId}/{answer}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult CheckAnswer(int questionId, int answer)
+        {
+            var check = _questionRepository.CheckAnswer(questionId, answer);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (check)
+            {
+                return (StatusCode(200, ModelState));
+            }
+            else
+            {
+                return NoContent();
+            }
+
+        }
+
     }
 }

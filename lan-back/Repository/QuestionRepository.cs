@@ -57,5 +57,19 @@ namespace lan_back.Repository
             _context.Remove(question);
             return Save();
         }
+
+        public bool CheckAnswer(int questionId,int answer)
+        {
+            var question = _context.Questions.Where(q => q.Id == questionId).FirstOrDefault();
+            if (question.CorrectAnswer == answer)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }
