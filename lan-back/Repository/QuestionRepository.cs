@@ -71,5 +71,13 @@ namespace lan_back.Repository
             }
 
         }
+        public ICollection<Question> GetRandomQuestions(int moduleId, int count = 10)
+        {
+            return _context.Questions
+                   .Where(q => q.QuizId == moduleId)
+                   .OrderBy(f => Guid.NewGuid())
+                   .Take(count)
+                   .ToList();
+        }
     }
 }

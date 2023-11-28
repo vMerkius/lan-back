@@ -86,12 +86,13 @@ namespace lan_back.Repository
 
         public bool Login(string email, string password)
         {
-            var user = _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Email == email).FirstOrDefault();
             if (user == null)
             {
                 return false;
             }
-            return true;
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            return isPasswordValid;
  
         }
 

@@ -39,7 +39,7 @@ namespace lan_back
                         {
                             Name = "essa",
                             Email = "a@wp.pk",
-                            Password = "123",
+                            PasswordHash =  BCrypt.Net.BCrypt.HashPassword("123"),
                             DateOfBirth = new DateTime(1999, 3, 16),
                             Gender="M",
                             Country = "Poland",

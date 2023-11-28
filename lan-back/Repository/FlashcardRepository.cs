@@ -57,5 +57,14 @@ namespace lan_back.Repository
             _context.Remove(flashcard);
             return Save();
         }
+
+        public ICollection<Flashcard> GetRandomFlashcards(int moduleId, int count = 10)
+        {
+            return _context.Flashcards
+                   .Where(f => f.ModuleId == moduleId)
+                   .OrderBy(f => Guid.NewGuid()) 
+                   .Take(count) 
+                   .ToList();
+        }
     }
 }

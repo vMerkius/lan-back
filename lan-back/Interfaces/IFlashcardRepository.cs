@@ -11,6 +11,7 @@ namespace lan_back.Interfaces
         bool CreateFlashcard(Flashcard flashcard);
         bool UpdateFlashcard(Flashcard flashcard);
         bool DeleteFlashcard(Flashcard flashcard);
+        ICollection<Flashcard> GetRandomFlashcards(int moduleId,int count);
         bool Save();
     }
 }

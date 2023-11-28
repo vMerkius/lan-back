@@ -12,6 +12,7 @@ namespace lan_back.Interfaces
         bool UpdateQuestion(Question question);
         bool DeleteQuestion(Question question);
         bool CheckAnswer(int questionId,int answer);
+        ICollection<Question> GetRandomQuestions(int moduleId, int count);
         bool Save();
 
     }

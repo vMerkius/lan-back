@@ -176,3 +176,4 @@ C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\refint\lan-ba
 C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\lan-back.pdb
 C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\lan-back.genruntimeconfig.cache
 C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\ref\lan-back.dll
+C:\Users\Merki\Desktop\lan-back\lan-back\bin\Debug\net6.0\BCrypt.Net-Next.dll

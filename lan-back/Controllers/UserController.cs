@@ -4,6 +4,12 @@ using lan_back.Interfaces;
 using lan_back.Models;
 using lan_back.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace lan_back.Controllers
 {
@@ -13,11 +19,13 @@ namespace lan_back.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _configuration= configuration;
         }
 
         
@@ -118,10 +126,13 @@ namespace lan_back.Controllers
                 return StatusCode(422, ModelState);
             }
 
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userCreate.Password);
             var userMap = _mapper.Map<User>(userCreate);
+            userMap.PasswordHash = hashedPassword;
 
             if (!_userRepository.CreateUser(userMap))
             {
@@ -210,7 +221,39 @@ namespace lan_back.Controllers
                 return BadRequest("Invalid email or password.");
             }
             //TODO token
-            return Ok("Successfully logged in");
+            var user = _userRepository.GetUserByEmail(email);
+            string token = CreateToken(user);
+            return Ok(token);
+        }
+       /* public static string GenerateSecretKey()
+        {
+            using (var randomNumberGenerator = new RNGCryptoServiceProvider())
+            {
+                var randomBytes = new byte[32]; 
+                randomNumberGenerator.GetBytes(randomBytes);
+                return Convert.ToBase64String(randomBytes);
+            }
+        }*/
+
+        private string CreateToken(User user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim("userId", user.Id.ToString())
+
+            };
+            //var secret = GenerateSecretKey();
+            var secret = _configuration.GetSection("AppSettings:Token").Value!; 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+               claims: claims,
+               expires: DateTime.Now.AddHours(1),
+               signingCredentials: creds);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
         }
 
 
