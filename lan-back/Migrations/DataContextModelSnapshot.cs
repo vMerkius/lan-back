@@ -241,6 +241,28 @@ namespace lan_back.Migrations
                     b.ToTable("Reports");
                 });
 
+            modelBuilder.Entity("lan_back.Models.Sentence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("Sentences");
+                });
+
             modelBuilder.Entity("lan_back.Models.Subject", b =>
                 {
                     b.Property<int>("Id")
@@ -436,6 +458,17 @@ namespace lan_back.Migrations
                     b.Navigation("Report");
                 });
 
+            modelBuilder.Entity("lan_back.Models.Sentence", b =>
+                {
+                    b.HasOne("lan_back.Models.Module", "Module")
+                        .WithMany("SentenceList")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+                });
+
             modelBuilder.Entity("lan_back.Models.Subject", b =>
                 {
                     b.HasOne("lan_back.Models.Lesson", "Lesson")
@@ -501,6 +534,8 @@ namespace lan_back.Migrations
                     b.Navigation("Flashcards");
 
                     b.Navigation("Lessons");
+
+                    b.Navigation("SentenceList");
                 });
 
             modelBuilder.Entity("lan_back.Models.Question", b =>

@@ -23,6 +23,8 @@ builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
+builder.Services.AddScoped<ISentenceRepository, SentenceRepository>();
+
 
 
 
@@ -42,7 +44,7 @@ builder.Services.AddCors(option =>
     option.AddPolicy("corspolicy",
         build =>
         {
-            build.WithOrigins("http://localhost:5173")
+            build.WithOrigins("http://127.0.0.1:5173")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

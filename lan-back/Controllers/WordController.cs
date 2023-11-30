@@ -20,7 +20,7 @@ namespace lan_back.Controllers
             _mapper = mapper;
         }
         [HttpGet("{wordId}")]
-        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(200, Type = typeof(Word))]
         [ProducesResponseType(400)]
         public IActionResult GetWord(int wordId)
         {
@@ -35,7 +35,7 @@ namespace lan_back.Controllers
             return Ok(word);
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Word>))]
         public IActionResult getWords()
         {
             var words = _mapper.Map<List<WordDto>>(_wordRepository.GetWords());

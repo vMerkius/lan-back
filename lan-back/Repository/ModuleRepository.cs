@@ -36,7 +36,10 @@ namespace lan_back.Repository
         public ICollection<Lesson> GetLessonsFromModule(int id)
         {
             return _context.Lessons.Where(l => l.Module.Id == id).ToList();
-
+        }
+        public ICollection<Sentence> GetSentencesFromModule(int id)
+        {
+            return _context.Sentences.Where(s => s.Module.Id == id).ToList();
         }
 
         public bool CreateModule(Module module)

@@ -32,6 +32,8 @@ namespace lan_back.Helper
             CreateMap<ReportDto, Report>();
             CreateMap<Reply, ReplyDto>();
             CreateMap<ReplyDto, Reply>();
+            CreateMap<Sentence, SentenceDto>();
+            CreateMap<SentenceDto, Sentence>(); 
 
 
         }

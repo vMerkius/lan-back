@@ -22,6 +22,8 @@ namespace lan_back.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Reply> Replies { get; set; }
+        public DbSet<Sentence> Sentences { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

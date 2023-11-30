@@ -9,6 +9,7 @@ namespace lan_back.Interfaces
         bool ModuleExists(int id);
         ICollection<Lesson> GetLessonsFromModule(int id);
         ICollection<Flashcard> GetFlashCardsFromModule(int id);
+        ICollection<Sentence> GetSentencesFromModule(int id);
         bool CreateModule(Module module);
         bool UpdateModule(Module module);
         bool DeleteModule(Module module);

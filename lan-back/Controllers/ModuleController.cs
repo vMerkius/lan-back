@@ -76,6 +76,21 @@ namespace lan_back.Controllers
 
             return Ok(lessons);
         }
+        [HttpGet("all/sentences/{moduleId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Sentence>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetSentencesFromModule(int moduleId)
+        {
+            if (!_moduleRepository.ModuleExists(moduleId))
+                return NotFound();
+
+            var sentences = _mapper.Map<List<SentenceDto>>(_moduleRepository.GetSentencesFromModule(moduleId));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(sentences);
+        }
 
         [HttpPost]
         [ProducesResponseType(204)]
