@@ -57,5 +57,13 @@ namespace lan_back.Repository
             }
             return Save();
         }
+        public ICollection<Sentence> GetRandomSentences(int moduleId, int count)
+        {
+            return _context.Sentences
+                   .Where(s => s.ModuleId == moduleId)
+                   .OrderBy(f => Guid.NewGuid())
+                   .Take(count)
+                   .ToList();
+        }
     }
 }

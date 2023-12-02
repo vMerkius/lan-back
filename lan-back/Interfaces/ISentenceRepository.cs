@@ -11,6 +11,7 @@ namespace lan_back.Interfaces
         bool CreateSentences(List<Sentence> sentences);
         bool UpdateSentence(Sentence sentence);
         bool DeleteSentence(Sentence sentence);
+        ICollection<Sentence> GetRandomSentences(int moduleId, int count);
         bool Save();
     }
 }

@@ -71,7 +71,7 @@ namespace lan_back.Repository
             }
 
         }
-        public ICollection<Question> GetRandomQuestions(int moduleId, int count = 10)
+        public ICollection<Question> GetRandomQuestions(int moduleId, int count)
         {
             return _context.Questions
                    .Where(q => q.QuizId == moduleId)

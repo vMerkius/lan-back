@@ -58,7 +58,7 @@ namespace lan_back.Repository
             return Save();
         }
 
-        public ICollection<Flashcard> GetRandomFlashcards(int moduleId, int count = 10)
+        public ICollection<Flashcard> GetRandomFlashcards(int moduleId, int count)
         {
             return _context.Flashcards
                    .Where(f => f.ModuleId == moduleId)

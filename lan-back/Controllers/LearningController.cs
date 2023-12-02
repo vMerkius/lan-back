@@ -14,33 +14,37 @@ namespace lan_back.Controllers
         private readonly IFlashcardRepository _flashcardRepository;
         private readonly IQuizRepository _quizRepository;
         private readonly IQuestionRepository _questionRepository;
+        private readonly ISentenceRepository _sentenceRepository;
         private readonly IMapper _mapper;
 
 
-        public LearningController(IFlashcardRepository flashcardRepository, IQuizRepository quizRepository,  IMapper mapper, IQuestionRepository questionRepository)
+        public LearningController(IFlashcardRepository flashcardRepository, IQuizRepository quizRepository,  IMapper mapper, IQuestionRepository questionRepository, ISentenceRepository sentenceRepository)
         {
             _flashcardRepository = flashcardRepository;
             _quizRepository = quizRepository;
             _mapper = mapper;
             _questionRepository = questionRepository;
+            _sentenceRepository = sentenceRepository;
         }
 
         [HttpGet("{moduleId}")]
         [ProducesResponseType(200)]
         public IActionResult GetSet(int moduleId)
         {
-            var flashcards = _flashcardRepository.GetRandomFlashcards(moduleId, 10);
-            var quizQuestions = _questionRepository.GetRandomQuestions(moduleId, 10);
+            var flashcards = _flashcardRepository.GetRandomFlashcards(moduleId, 7);
+            var quizQuestions = _questionRepository.GetRandomQuestions(moduleId, 7);
+            var sentences = _sentenceRepository.GetRandomSentences(moduleId, 7);
 
-            if (flashcards == null || quizQuestions == null)
+            if (flashcards == null || quizQuestions == null || sentences==null)
             {
                 return NotFound();
             }
 
             var flashcardDtos = _mapper.Map<IEnumerable<FlashcardDto>>(flashcards);
             var quizQuestionDtos = _mapper.Map<IEnumerable<QuestionDto>>(quizQuestions);
+            var sentenceDtos = _mapper.Map<IEnumerable<SentenceDto>>(sentences);
 
-            return Ok(new { Flashcards = flashcardDtos, QuizQuestions = quizQuestionDtos });
+            return Ok(new { Flashcards = flashcardDtos, QuizQuestions = quizQuestionDtos, Sentences = sentenceDtos });
 
         }
 
