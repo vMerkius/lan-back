@@ -1,6 +1,7 @@
 ﻿using lan_back.Data;
 using lan_back.Interfaces;
 using lan_back.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace lan_back.Repository
 {
@@ -58,13 +59,17 @@ namespace lan_back.Repository
             return Save();
         }
 
-        public ICollection<Flashcard> GetRandomFlashcards(int moduleId, int count)
+        public ICollection<Word> GetRandomFlashcardsWords(int moduleId, int count)
         {
-            return _context.Flashcards
-                   .Where(f => f.ModuleId == moduleId)
-                   .OrderBy(f => Guid.NewGuid()) 
-                   .Take(count) 
-                   .ToList();
+            var flashcards = _context.Flashcards
+                                      .Where(f => f.ModuleId == moduleId)
+                                      .Include(f => f.Words) 
+                                      .OrderBy(f => Guid.NewGuid())
+                                      .Take(count)
+                                      .ToList();
+
+            var words = flashcards.SelectMany(f => f.Words).ToList();
+            return words;
         }
     }
 }

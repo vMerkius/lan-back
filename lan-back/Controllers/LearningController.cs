@@ -31,20 +31,20 @@ namespace lan_back.Controllers
         [ProducesResponseType(200)]
         public IActionResult GetSet(int moduleId)
         {
-            var flashcards = _flashcardRepository.GetRandomFlashcards(moduleId, 7);
+            var words = _flashcardRepository.GetRandomFlashcardsWords(moduleId, 7);
             var quizQuestions = _questionRepository.GetRandomQuestions(moduleId, 7);
             var sentences = _sentenceRepository.GetRandomSentences(moduleId, 7);
 
-            if (flashcards == null || quizQuestions == null || sentences==null)
+            if (words == null || quizQuestions == null || sentences==null)
             {
                 return NotFound();
             }
 
-            var flashcardDtos = _mapper.Map<IEnumerable<FlashcardDto>>(flashcards);
+            var wordDtos = _mapper.Map<IEnumerable<WordDto>>(words);
             var quizQuestionDtos = _mapper.Map<IEnumerable<QuestionDto>>(quizQuestions);
             var sentenceDtos = _mapper.Map<IEnumerable<SentenceDto>>(sentences);
 
-            return Ok(new { Flashcards = flashcardDtos, QuizQuestions = quizQuestionDtos, Sentences = sentenceDtos });
+            return Ok(new { Flashcards = wordDtos, QuizQuestions = quizQuestionDtos, Sentences = sentenceDtos });
 
         }
 
