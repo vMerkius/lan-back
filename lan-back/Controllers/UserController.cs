@@ -25,19 +25,19 @@ namespace lan_back.Controllers
         {
             _userRepository = userRepository;
             _mapper = mapper;
-            _configuration= configuration;
+            _configuration = configuration;
         }
 
-        
+
 
         [HttpGet("{userId}")]
-        [ProducesResponseType(200, Type=typeof(User))]
+        [ProducesResponseType(200, Type = typeof(User))]
         [ProducesResponseType(400)]
         public IActionResult GetUser(int userId)
         {
             if (!_userRepository.UserExists(userId))
                 return NotFound();
-            
+
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(userId));
 
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace lan_back.Controllers
         }
 
         [HttpGet("byname/{userName}")]
-        [ProducesResponseType(200,Type=typeof(User))]
+        [ProducesResponseType(200, Type = typeof(User))]
         [ProducesResponseType(400)]
         public IActionResult GetUser(string userName)
         {
@@ -144,7 +144,7 @@ namespace lan_back.Controllers
         [HttpPost("join/course")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult JoinCourse( [FromQuery] int userId ,[FromQuery] int courseId)
+        public IActionResult JoinCourse([FromQuery] int userId, [FromQuery] int courseId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -225,15 +225,15 @@ namespace lan_back.Controllers
             string token = CreateToken(user);
             return Ok(token);
         }
-       /* public static string GenerateSecretKey()
-        {
-            using (var randomNumberGenerator = new RNGCryptoServiceProvider())
-            {
-                var randomBytes = new byte[32]; 
-                randomNumberGenerator.GetBytes(randomBytes);
-                return Convert.ToBase64String(randomBytes);
-            }
-        }*/
+        /* public static string GenerateSecretKey()
+         {
+             using (var randomNumberGenerator = new RNGCryptoServiceProvider())
+             {
+                 var randomBytes = new byte[32]; 
+                 randomNumberGenerator.GetBytes(randomBytes);
+                 return Convert.ToBase64String(randomBytes);
+             }
+         }*/
 
         private string CreateToken(User user)
         {
@@ -244,7 +244,7 @@ namespace lan_back.Controllers
 
             };
             //var secret = GenerateSecretKey();
-            var secret = _configuration.GetSection("AppSettings:Token").Value!; 
+            var secret = _configuration.GetSection("AppSettings:Token").Value!;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -280,6 +280,14 @@ namespace lan_back.Controllers
                 return BadRequest(ModelState);
 
             return Ok(courses);
+        }
+        [HttpGet("progress/{courseId}/{userId}")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        public IActionResult GetProgress(int userId, int courseId)
+        {
+            var progress = _userRepository.GetProgress(userId, courseId);
+
+            return Ok(progress);
         }
     }
 }

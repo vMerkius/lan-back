@@ -61,6 +61,7 @@ namespace lan_back.Repository
             {
                 User = userEntity,
                 Course = courseEntity,
+                Progress=0,
             };
             _context.Add(userCourse);
             return Save();
@@ -200,6 +201,23 @@ namespace lan_back.Repository
                 Count = group.Value
             }).ToList();
         }
+        public int GetProgress(int courseId, int userId)
+        {
+            var userCourse = _context.UserCourses
+                   .Where(u => u.UserId == userId && u.CourseId == courseId)
+                   .FirstOrDefault();
+
+            if (userCourse != null)
+            {
+                return userCourse.Progress;
+            }
+            else
+            {
+                return 10;
+            }
+        }
+
+
 
     }
 }

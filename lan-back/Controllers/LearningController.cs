@@ -27,26 +27,28 @@ namespace lan_back.Controllers
             _sentenceRepository = sentenceRepository;
         }
 
-        [HttpGet("{moduleId}")]
-        [ProducesResponseType(200)]
-        public IActionResult GetSet(int moduleId)
-        {
-            var words = _flashcardRepository.GetRandomFlashcardsWords(moduleId, 7);
-            var quizQuestions = _questionRepository.GetRandomQuestions(moduleId, 7);
-            var sentences = _sentenceRepository.GetRandomSentences(moduleId, 7);
+          [HttpGet("{moduleId}")]
+          [ProducesResponseType(200)]
+          public IActionResult GetSet(int moduleId)
+          {
+              var words = _flashcardRepository.GetRandomFlashcardsWords(moduleId, 7);
+              var quizQuestions = _questionRepository.GetRandomQuestions(moduleId, 7);
+              var sentences = _sentenceRepository.GetRandomSentences(moduleId, 7);
 
-            if (words == null || quizQuestions == null || sentences==null)
-            {
-                return NotFound();
-            }
 
-            var wordDtos = _mapper.Map<IEnumerable<WordDto>>(words);
-            var quizQuestionDtos = _mapper.Map<IEnumerable<QuestionDto>>(quizQuestions);
-            var sentenceDtos = _mapper.Map<IEnumerable<SentenceDto>>(sentences);
+              if (words == null || quizQuestions == null || sentences==null)
+              {
+                  return NotFound();
+              }
 
-            return Ok(new { Flashcards = wordDtos, QuizQuestions = quizQuestionDtos, Sentences = sentenceDtos });
+              var wordDtos = _mapper.Map<IEnumerable<WordDto>>(words);
+              var quizQuestionDtos = _mapper.Map<IEnumerable<QuestionDto>>(quizQuestions);
+              var sentenceDtos = _mapper.Map<IEnumerable<SentenceDto>>(sentences);
 
-        }
+              return Ok(new { Flashcards = wordDtos, QuizQuestions = quizQuestionDtos, Sentences = sentenceDtos });
+
+          }
+
 
 
 

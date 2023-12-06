@@ -1,6 +1,7 @@
 ﻿using lan_back.Data;
 using lan_back.Interfaces;
 using lan_back.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace lan_back.Repository
 {

@@ -53,7 +53,7 @@ namespace lan_back.Controllers
             if (sentenceCreate == null)
                 return BadRequest(ModelState);
             var sentence = _sentenceRepository.GetSentences()
-                .Where(s => s.Content.Trim().ToUpper() == sentenceCreate.Content.Trim().ToUpper())
+                .Where(s => s.Original.Trim().ToUpper() == sentenceCreate.Original.Trim().ToUpper())
                 .FirstOrDefault();
             if (sentence != null)
             {
@@ -143,11 +143,11 @@ namespace lan_back.Controllers
 
             foreach (var sentenceCreate in sentencesCreate)
             {
-                bool sentenceExists = existingSentences.Any(s => s.Content.Trim().ToUpper() == sentenceCreate.Content.Trim().ToUpper());
+                bool sentenceExists = existingSentences.Any(s => s.Original.Trim().ToUpper() == sentenceCreate.Original.Trim().ToUpper());
 
                 if (sentenceExists)
                 {
-                    ModelState.AddModelError("", $"Sentence '{sentenceCreate.Content}' already exists");
+                    ModelState.AddModelError("", $"Sentence '{sentenceCreate.Original}' already exists");
                     continue;
                 }
 

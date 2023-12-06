@@ -24,6 +24,7 @@ namespace lan_back.Interfaces
         string DetermineAgeGroup(DateTime dateOfBirth);
         object GetUsersByAgeGroup();
         bool Save();
+        int GetProgress(int courseId, int userId);
 
     }
 }
