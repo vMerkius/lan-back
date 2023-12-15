@@ -216,8 +216,16 @@ namespace lan_back.Repository
                 return 10;
             }
         }
+        public bool UpdateProgress(int courseId, int userId)
+        {
+            var userCourse = _context.UserCourses
+                .FirstOrDefault(u => u.UserId == userId && u.CourseId == courseId);
+            userCourse.Progress = userCourse.Progress+1;
 
-
+            _context.Update(userCourse);
+            return Save();
+ 
+        }
 
     }
 }

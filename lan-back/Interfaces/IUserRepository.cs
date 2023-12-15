@@ -25,6 +25,7 @@ namespace lan_back.Interfaces
         object GetUsersByAgeGroup();
         bool Save();
         int GetProgress(int courseId, int userId);
+        bool UpdateProgress(int userId, int courseId);
 
     }
 }

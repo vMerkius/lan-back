@@ -18,12 +18,14 @@ namespace lan_back.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public UserController(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+        public UserController(IUserRepository userRepository,ICourseRepository courseRepository, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _courseRepository = courseRepository;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -220,20 +222,11 @@ namespace lan_back.Controllers
             {
                 return BadRequest("Invalid email or password.");
             }
-            //TODO token
             var user = _userRepository.GetUserByEmail(email);
             string token = CreateToken(user);
             return Ok(token);
         }
-        /* public static string GenerateSecretKey()
-         {
-             using (var randomNumberGenerator = new RNGCryptoServiceProvider())
-             {
-                 var randomBytes = new byte[32]; 
-                 randomNumberGenerator.GetBytes(randomBytes);
-                 return Convert.ToBase64String(randomBytes);
-             }
-         }*/
+
 
         private string CreateToken(User user)
         {
@@ -289,5 +282,33 @@ namespace lan_back.Controllers
 
             return Ok(progress);
         }
+
+        [HttpPut("progress/update/{courseId}/{userId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateUserProgress(int userId, int courseId)
+        {
+            if (!_userRepository.UserExists(userId))
+            {
+                return NotFound();
+            }
+            if (!_courseRepository.CourseExists(courseId))
+            {
+                return NotFound();
+            }
+           
+
+            if (!_userRepository.UpdateProgress(courseId, userId))
+            {
+                ModelState.AddModelError("", "Something went wrong updating owner");
+                return StatusCode(500, ModelState);
+            }
+            
+            return NoContent();
+        }
     }
+
+   
 }
+
