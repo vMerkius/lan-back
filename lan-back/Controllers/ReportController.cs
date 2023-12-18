@@ -54,14 +54,7 @@ namespace lan_back.Controllers
         {
             if (reportCreate == null)
                 return BadRequest(ModelState);
-            var report = _reportRepository.GetReports()
-                .Where(r => r.Topic.Trim().ToUpper() == reportCreate.Topic.Trim().ToUpper())
-                .FirstOrDefault();
-            if (report != null)
-            {
-                ModelState.AddModelError("", "Report already exists");
-                return StatusCode(422, ModelState);
-            }
+      
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
