@@ -178,3 +178,5 @@ C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\lan-back.genr
 C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\obj\Debug\net6.0\ref\lan-back.dll
 C:\Users\Merki\Desktop\lan-back\lan-back\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Merki\Desktop\lan-back\lan-back\lan-back\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll

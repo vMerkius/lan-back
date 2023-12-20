@@ -206,15 +206,11 @@ namespace lan_back.Repository
             var userCourse = _context.UserCourses
                    .Where(u => u.UserId == userId && u.CourseId == courseId)
                    .FirstOrDefault();
+            var progress = userCourse.Progress;
+            Console.WriteLine(progress);
+            return progress;
 
-            if (userCourse != null)
-            {
-                return userCourse.Progress;
-            }
-            else
-            {
-                return 10;
-            }
+
         }
         public bool UpdateProgress(int courseId, int userId)
         {

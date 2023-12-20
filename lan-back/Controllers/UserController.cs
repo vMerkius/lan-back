@@ -278,7 +278,7 @@ namespace lan_back.Controllers
         [ProducesResponseType(200, Type = typeof(int))]
         public IActionResult GetProgress(int userId, int courseId)
         {
-            var progress = _userRepository.GetProgress(userId, courseId);
+            var progress = _userRepository.GetProgress(courseId,userId);
 
             return Ok(progress);
         }

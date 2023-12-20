@@ -1,5 +1,6 @@
 using lan_back;
 using lan_back.Data;
+using lan_back.Hubs;
 using lan_back.Interfaces;
 using lan_back.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 builder.Services.AddScoped<ISentenceRepository, SentenceRepository>();
 
+builder.Services.AddSignalR(); 
 
 
 
@@ -44,7 +46,7 @@ builder.Services.AddCors(option =>
     option.AddPolicy("corspolicy",
         build =>
         {
-            build.WithOrigins("http://localhost:5173")
+            build.WithOrigins("http://127.0.0.1:5173")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -73,12 +75,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseCors("corspolicy");
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chatHub");
+});
+
+//app.MapControllers();
 
 app.Run();
