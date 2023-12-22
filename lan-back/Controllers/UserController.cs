@@ -4,6 +4,7 @@ using lan_back.Interfaces;
 using lan_back.Models;
 using lan_back.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -132,9 +133,9 @@ namespace lan_back.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userCreate.Password);
             var userMap = _mapper.Map<User>(userCreate);
-            userMap.PasswordHash = hashedPassword;
 
             if (!_userRepository.CreateUser(userMap))
             {
@@ -143,6 +144,8 @@ namespace lan_back.Controllers
             }
             return Ok("Successfully created");
         }
+
+
         [HttpPost("join/course")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -306,6 +309,32 @@ namespace lan_back.Controllers
             }
             
             return NoContent();
+        }
+        [HttpPost("changePassword/{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult ChangePassword(int userId, [FromBody] ChangePasswordDto changePasswordDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userFromRepo = _userRepository.GetUser(userId);
+            if (userFromRepo == null)
+                return NotFound();
+
+            var validPassword = BCrypt.Net.BCrypt.Verify(changePasswordDto.OldPassword, userFromRepo.PasswordHash);
+            if (!validPassword)
+            {
+                return BadRequest("Stare hasło jest nieprawidłowe.");
+            }
+
+            var updateSucceeded = _userRepository.ChangePassword(userId, changePasswordDto.NewPassword, changePasswordDto.OldPassword);
+            if (!updateSucceeded)
+            {
+                return StatusCode(500, "Błąd podczas aktualizacji hasła.");
+            }
+
+            return Ok("Hasło zostało zmienione.");
         }
     }
 

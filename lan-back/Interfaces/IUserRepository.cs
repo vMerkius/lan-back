@@ -26,6 +26,7 @@ namespace lan_back.Interfaces
         bool Save();
         int GetProgress(int courseId, int userId);
         bool UpdateProgress(int userId, int courseId);
+        bool ChangePassword(int userId, string newPassword, string oldPassword);
 
     }
 }

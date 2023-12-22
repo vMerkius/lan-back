@@ -12,6 +12,5 @@
         public string ImageUrl { get; set; }   
         public ICollection<UserCourse> UserCourses { get; set; }
 
-
     }
 }

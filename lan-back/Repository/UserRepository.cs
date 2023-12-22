@@ -222,6 +222,23 @@ namespace lan_back.Repository
             return Save();
  
         }
+        public bool ChangePassword(int userId, string newPassword, string oldPassword)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.PasswordHash))
+            {
+                return false;
+            }
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.PasswordHash = hashedPassword;
+            _context.Users.Update(user);
+            return Save();
+        }
+
 
     }
 }
