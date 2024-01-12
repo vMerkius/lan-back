@@ -108,7 +108,7 @@ namespace lan_back.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateUser([FromBody] UserDto userCreate)
+        public async Task<IActionResult> CreateUser([FromBody] UserDto userCreate)
         {
             if (userCreate == null)
                 return BadRequest(ModelState);
@@ -136,14 +136,18 @@ namespace lan_back.Controllers
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userCreate.Password);
             var userMap = _mapper.Map<User>(userCreate);
+            userMap.PasswordHash = hashedPassword;
+  
 
             if (!_userRepository.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
+
             return Ok("Successfully created");
         }
+
 
 
         [HttpPost("join/course")]
@@ -227,6 +231,27 @@ namespace lan_back.Controllers
             }
             var user = _userRepository.GetUserByEmail(email);
             string token = CreateToken(user);
+            return Ok(token);
+        }
+        [HttpPost("login/admin")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult LoginAdmin([FromQuery] string email, [FromQuery] string password)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            bool isUserValid = _userRepository.Login(email, password);
+            if (!isUserValid)
+            {
+                return BadRequest("Invalid email or password.");
+            }
+
+            var userAdmin = _userRepository.GetUserByEmail(email);
+            if (!userAdmin.isAdmin)
+            {
+                return NotFound();
+            }
+            string token = CreateToken(userAdmin);
             return Ok(token);
         }
 

@@ -15,6 +15,7 @@ namespace lan_back.Interfaces
         bool CreateUser(User user);
         bool JoinCourse(int userId, int courseId);
         bool UpdateUser(int courdeId,User user);
+        bool UpdateUserOnly(User user);
         bool DeleteUser(User user);
         bool Login(string email, string password);
         int GetMen();

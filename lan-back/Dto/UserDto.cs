@@ -12,6 +12,7 @@ namespace lan_back.Dto
         public string Gender { get; set; }
         public string Country { get; set; }
         public string ImageUrl { get; set; }
+        public bool isAdmin { get; set; }
 
 
     }

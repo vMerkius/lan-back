@@ -11,6 +11,7 @@
         public string Country { get; set; }
         public string ImageUrl { get; set; }   
         public ICollection<UserCourse> UserCourses { get; set; }
+        public bool isAdmin { get; set; }
 
     }
 }

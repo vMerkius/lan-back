@@ -33,7 +33,6 @@ namespace lan_back.Repository
         {
             return _context.Users.Where(u => u.Id== id).FirstOrDefault();
         }
-
         public ICollection<User> GetUsers()
         {
             return _context.Users.OrderBy(u => u.Id).ToList();
@@ -74,6 +73,11 @@ namespace lan_back.Repository
         }
 
         public bool UpdateUser(int courdeId, User user)
+        {
+            _context.Update(user);
+            return Save();
+        }
+        public bool UpdateUserOnly(User user)
         {
             _context.Update(user);
             return Save();
@@ -138,7 +142,7 @@ namespace lan_back.Repository
                                                    (today.Month == u.DateOfBirth.Month && today.Day < u.DateOfBirth.Day)) ? 1 : 0))
                                      .Average();
 
-            return averageAge;
+            return Math.Round(averageAge, 2);
         }
         public object GetCountriesInfo()
         {
